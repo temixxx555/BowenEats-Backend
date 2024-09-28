@@ -1,18 +1,13 @@
 import express from "express";
-import { jwtCheck, jwtParse } from "../middleware/auth";
 import OrderController from "../controllers/OrderController";
+import { jwtCheck, jwtParse } from "../middleware/auth";
 
 const router = express.Router();
 
-router.get("/", jwtCheck, jwtParse, OrderController.getMyOrders);
+// POST to create an order
+router.post("/", jwtCheck, jwtParse, OrderController.createOrder); // Changed to root for clarity
 
-router.post(
-  "/checkout/create-checkout-session",
-  jwtCheck,
-  jwtParse,
-  OrderController.createCheckoutSession
-);
-
-router.post("/checkout/webhook", OrderController.stripeWebhookHandler);
+// GET to fetch user's orders
+router.get("/my-orders", jwtCheck, jwtParse, OrderController.getMyOrders);
 
 export default router;

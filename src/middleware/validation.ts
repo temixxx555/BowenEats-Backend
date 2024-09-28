@@ -24,6 +24,7 @@ export const validateMyUserRequest = [
   handleValidationErrors,
 ];
 
+
 export const validateMyRestaurantRequest = [
   body("restaurantName").notEmpty().withMessage("Restaurant name is required"),
   body("city").notEmpty().withMessage("City is required"),
@@ -33,7 +34,7 @@ export const validateMyRestaurantRequest = [
     .withMessage("Delivery price must be a positive number"),
   body("estimatedDeliveryTime")
     .isInt({ min: 0 })
-    .withMessage("Estimated delivery time must be a postivie integar"),
+    .withMessage("Estimated delivery time must be a positive integer"),
   body("cuisines")
     .isArray()
     .withMessage("Cuisines must be an array")
@@ -44,6 +45,18 @@ export const validateMyRestaurantRequest = [
   body("menuItems.*.name").notEmpty().withMessage("Menu item name is required"),
   body("menuItems.*.price")
     .isFloat({ min: 0 })
-    .withMessage("Menu item price is required and must be a postive number"),
+    .withMessage("Menu item price is required and must be a positive number"),
+  
+  // New validations for account name and account number
+  body("accountName")
+    .notEmpty()
+    .withMessage("Account name is required"),
+  body("accountNumber")
+    .notEmpty()
+    .withMessage("Account number is required")
+    .isNumeric()
+    .withMessage("Account number must be a numeric value"),
+  
   handleValidationErrors,
 ];
+

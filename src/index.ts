@@ -7,29 +7,34 @@ import { v2 as cloudinary } from "cloudinary";
 import myRestaurantRoute from "./routes/MyRestaurantRoute";
 import restaurantRoute from "./routes/RestaurantRoute";
 import OrderRoute from "./routes/OrderRoutes";
+
 const app = express();
 
 app.use(cors());
-
-app.use("/api/order/checkout/webhook", express.raw({ type: "*/*" }));
 app.use(express.json());
+
 mongoose
   .connect(process.env.MONGODB_CONNECTION_STRING as string)
-  .then(() => console.log("connected to database"));
+  .then(() => console.log("Connected to database"));
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
 app.get("/health", async (req: Request, res: Response) => {
-  res.send({ message: "health ok!" });
+  res.send({ message: "Health OK!" });
 });
 
+// User and restaurant routes
 app.use("/api/my/user", myUserRoute);
 app.use("/api/my/restaurant", myRestaurantRoute);
 app.use("/api/restaurant", restaurantRoute);
+
+// Order routes (no longer using Stripe)
 app.use("/api/order", OrderRoute);
+
 app.listen(7000, () => {
-  console.log("server started sucessfully");
+  console.log("Server started successfully");
 });

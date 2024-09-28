@@ -14,15 +14,20 @@ const orderSchema = new mongoose.Schema({
       menuItemId: { type: String, required: true },
       quantity: { type: Number, required: true },
       name: { type: String, required: true },
+      price: { type: Number, required: true },
     },
   ],
-  totalAmount: Number,
+  totalAmount: { type: Number, required: true },
+  deliveryPrice: { type: Number, default: 0 }, // Add deliveryPrice field here
   status: {
     type: String,
     enum: ["placed", "paid", "inProgress", "outForDelivery", "delivered"],
   },
   createdAt: { type: Date, default: Date.now },
+  accountName: { type: String, required: true },
+  accountNumber: { type: String, required: true },
 });
+
 
 const Order = mongoose.model("Order", orderSchema);
 export default Order;

@@ -23,6 +23,8 @@ const restaurantSchema = new mongoose.Schema({
   menuItems: [menuItemSchema],
   imageUrl: { type: String, required: true },
   lastUpdated: { type: Date, required: true },
+  accountName: { type: String ,required: true },        // New field
+  accountNumber: { type: String ,required: true  },      // New field
 });
 
 const Restaurant = mongoose.model("Restaurant", restaurantSchema);
